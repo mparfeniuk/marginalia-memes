@@ -166,7 +166,7 @@ export function useFabricCanvas() {
   const exportCanvas = useCallback((format: 'png' | 'jpeg' = 'png'): string => {
     const fabricCanvas = fabricCanvasRef.current
     if (!fabricCanvas) return ''
-    return fabricCanvas.toDataURL({ format, quality: 1 })
+    return fabricCanvas.toDataURL({ format, quality: 1, multiplier: 1 })
   }, [])
 
   return {
