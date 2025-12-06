@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState, useCallback } from 'react'
-import { fabric } from 'fabric'
+import { Canvas, IText, Image as FabricImage } from 'fabric'
 
 const getCanvasDimensions = () => {
   if (typeof window === 'undefined') {
@@ -18,15 +18,15 @@ const getCanvasDimensions = () => {
 
 export function useFabricCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const fabricCanvasRef = useRef<fabric.Canvas | null>(null)
-  const [canvas, setCanvas] = useState<fabric.Canvas | null>(null)
-  const [selectedObject, setSelectedObject] = useState<fabric.Object | null>(null)
+  const fabricCanvasRef = useRef<Canvas | null>(null)
+  const [canvas, setCanvas] = useState<Canvas | null>(null)
+  const [selectedObject, setSelectedObject] = useState<any | null>(null)
 
   useEffect(() => {
     if (!canvasRef.current || fabricCanvasRef.current) return
 
     const { width, height } = getCanvasDimensions()
-    const fabricCanvas = new fabric.Canvas(canvasRef.current, {
+    const fabricCanvas = new Canvas(canvasRef.current, {
       width,
       height,
       backgroundColor: '#ffffff',
@@ -97,7 +97,7 @@ export function useFabricCanvas() {
       const scale = Math.min(scaleX, scaleY)
       
       // Create fabric image
-      const fabricImg = new fabric.Image(img, {
+      const fabricImg = new FabricImage(img, {
         scaleX: scale,
         scaleY: scale,
         left: (canvasWidth - img.width * scale) / 2,
@@ -108,7 +108,7 @@ export function useFabricCanvas() {
       
       // Add to canvas
       fabricCanvas.add(fabricImg)
-      fabricCanvas.sendToBack(fabricImg)
+      fabricCanvas.sendObjectToBack(fabricImg)
       fabricCanvas.renderAll()
       
       console.log('Image added to canvas, rendering...')
@@ -122,14 +122,14 @@ export function useFabricCanvas() {
     img.src = imageUrl
   }, [])
 
-  const addText = useCallback((text: string, options?: Partial<fabric.ITextOptions>) => {
+  const addText = useCallback((text: string, options?: Partial<any>) => {
     const fabricCanvas = fabricCanvasRef.current
     if (!fabricCanvas) return
 
     const canvasWidth = fabricCanvas.width || 800
     const canvasHeight = fabricCanvas.height || 600
 
-    const textObject = new fabric.IText(text, {
+    const textObject = new IText(text, {
       left: canvasWidth / 2,
       top: canvasHeight / 2,
       originX: 'center',
