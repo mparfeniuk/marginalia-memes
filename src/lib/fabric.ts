@@ -1,4 +1,4 @@
-import { IText, ITextOptions } from 'fabric'
+import { IText } from 'fabric'
 
 // English fonts
 export const ENGLISH_FONTS = [
@@ -50,6 +50,6 @@ export function createTextObject(
     ...options,
     editable: true,
     selectable: true,
-  } as ITextOptions)
+  } as any)
 }
 
