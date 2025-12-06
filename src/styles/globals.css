@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=MedievalSharp&family=UnifrakturMaguntia&family=Bangers&family=Comic+Neue:wght@300;400;700&family=Fredoka+One&family=Righteous&family=Press+Start+2P&family=Roboto:wght@300;400;500;700&family=Oswald:wght@400;500;600;700&family=PT+Sans:wght@400;700&family=Montserrat:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-medieval: 'MedievalSharp', cursive;
+  --font-decorative: 'UnifrakturMaguntia', cursive;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-image: 
+    linear-gradient(
+      rgba(20, 12, 8, 0.85),
+      rgba(30, 18, 12, 0.90)
+    ),
+    url('/images/bg/bg-2.jpg');
+  background-size: cover;
+  background-position: center 60%;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+}
+
+body {
+  color: #F4E4BC;
+  font-family: var(--font-medieval), serif;
+}
+
+@layer utilities {
+  .text-medieval {
+    font-family: var(--font-medieval), serif;
+  }
+
+  .text-decorative {
+    font-family: var(--font-decorative), serif;
+  }
+
+  .border-medieval {
+    border: 3px solid #D4AF37;
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+  }
+
+  .bg-parchment {
+    background-color: #F4E4BC;
+    background-image: 
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0, 0, 0, 0.03) 2px,
+        rgba(0, 0, 0, 0.03) 4px
+      );
+  }
+}
+
+/* Стилі для Fabric.js canvas */
+.canvas-container {
+  position: relative !important;
+}
+
+/* Верхній canvas для курсора та інтерактивних елементів */
+.upper-canvas {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+/* Вирівнювання ползунка слайдера по центру треку */
+/* Трек має висоту 8px (h-2), thumb має висоту 20px (w-5/h-5) */
+/* Потрібно зсунути thumb вгору на (20px - 8px) / 2 = 6px */
+input[type="range"]::-webkit-slider-thumb {
+  transform: translateY(-6px) !important;
+}
+
+input[type="range"]::-moz-range-thumb {
+  transform: translateY(-6px) !important;
+}
+
