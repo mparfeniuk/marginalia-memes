@@ -16,11 +16,50 @@ export default function Home() {
   const [showShareModal, setShowShareModal] = useState(false);
   const [shareDataUrl, setShareDataUrl] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [disclaimerLang, setDisclaimerLang] = useState<"uk" | "en">("uk");
+  const [disclaimerCollapsed, setDisclaimerCollapsed] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const [buttonsHeight, setButtonsHeight] = useState(0);
   const [defaultImageLoaded, setDefaultImageLoaded] = useState(false);
   const [defaultTextAdded, setDefaultTextAdded] = useState(false);
+
+  const disclaimerCopy: Record<
+    "uk" | "en",
+    { title: string; intro: string; bullets: string[] }
+  > = {
+    uk: {
+      title: "Вайб-дисклеймер",
+      intro:
+        "Марафон з вайбкодінгу: 10 проєктів, по одному на день, максимум 5 годин.\nЛегка навчальна штука, щоб перезавантажитися після великих задач.\nПроєкти сирі, невідшліфовані й можуть лагати (а що ви хотіли від проєкту, створеного за 3–4 години 🙂).",
+      bullets: [
+        "Повчитись вайбкодити за допомогою Cursor.",
+        "Дослідити, як AI-підхід впливає на темп і якість.",
+        "Зрозуміти сильні/слабкі сторони підходу, потенційні продуктові вигоди.",
+        "Напрацьовувати нове мислення в реалізації проектів.",
+        "Створити проєкти, які хотілося реалізувати, але не було часу й можливостей.",
+        "Попрацювати в творчому, спонтанному, необтяжливому ключі.",
+        "Накидати проєкти в портфоліо.",
+      ],
+    },
+    en: {
+      title: "Vibe Disclaimer",
+      intro:
+        "Vibe-coding marathon: 10 projects, one per day, max 5 hours.\nA light learning build to reset after bigger work.\nProjects are raw, unpolished, and may lag (what else to expect from a 3–4 hour build 🙂).",
+      bullets: [
+        "Learn vibe-coding with Cursor.",
+        "Explore how the AI-assisted approach affects speed and quality.",
+        "Understand the approach’s strengths/weaknesses and product upsides.",
+        "Build a new mindset for shipping projects.",
+        "Ship projects you wanted to build but lacked time or access to.",
+        "Work in a creative, spontaneous, low-pressure flow.",
+        "Add quick projects to the portfolio.",
+      ],
+    },
+  };
+
+  const disclaimer = disclaimerCopy[disclaimerLang];
+  const metaLabel = disclaimerLang === "uk" ? "Мета" : "Goals";
 
   useEffect(() => {
     if (buttonsRef.current) {
@@ -169,6 +208,72 @@ export default function Home() {
   return (
     <main className="min-h-screen p-4 md:p-6">
       <div className="max-w-[1920px] mx-auto">
+        <section className="mb-6 font-[Arial,sans-serif]">
+          <div className="rounded-xl border border-yellow-600 bg-[#fff3b0] text-black shadow-md">
+            <div className="flex flex-col gap-2 p-4 sm:p-5">
+              <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                <div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-yellow-950">
+                    {disclaimer.title}
+                  </h2>
+                </div>
+                <div className="flex items-center gap-2">
+                  {(["uk", "en"] as const).map((lang) => (
+                    <button
+                      key={lang}
+                      type="button"
+                      onClick={() => setDisclaimerLang(lang)}
+                      className={`rounded-full border border-black px-3 py-1 text-xs font-semibold uppercase tracking-wide transition ${
+                        disclaimerLang === lang
+                          ? "bg-black text-[#fff3b0]"
+                          : "bg-white/80 text-black hover:bg-white"
+                      }`}
+                    >
+                      {lang === "uk" ? "Українська" : "English"}
+                    </button>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => setDisclaimerCollapsed((prev) => !prev)}
+                    className="inline-flex items-center gap-1 rounded-full border border-black px-3 py-1 text-xs font-semibold uppercase tracking-wide transition hover:bg-white/80"
+                    aria-expanded={!disclaimerCollapsed}
+                  >
+                    <span>{disclaimerCollapsed ? "▸" : "▾"}</span>
+                    <span>
+                      {disclaimerCollapsed
+                        ? disclaimerLang === "uk"
+                          ? "Розгорнути"
+                          : "Expand"
+                        : disclaimerLang === "uk"
+                        ? "Згорнути"
+                        : "Collapse"}
+                    </span>
+                  </button>
+                </div>
+              </div>
+              {!disclaimerCollapsed && (
+                <>
+                  <p className="text-sm md:text-base leading-relaxed">
+                    {disclaimer.intro}
+                  </p>
+                  <p className="text-xs font-semibold uppercase tracking-[0.08em] text-yellow-900">
+                    {metaLabel}
+                  </p>
+                  <ul className="space-y-1.5 text-sm md:text-base leading-relaxed">
+                    {disclaimer.bullets.map((item) => (
+                      <li key={item} className="flex items-start gap-2">
+                        <span className="mt-0.5 text-base leading-none text-green-900">
+                          ✔
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
+            </div>
+          </div>
+        </section>
         <header className="text-center mb-6">
           <h1 className="text-4xl md:text-5xl font-decorative text-medieval-gold mb-2 drop-shadow-lg">
             Marginalia Memes
@@ -191,7 +296,7 @@ export default function Home() {
             </div>
 
             {/* Image Gallery */}
-            <div className="flex-1 overflow-y-auto min-h-0">
+            <div className="flex-1 min-h-0 lg:overflow-y-auto">
               <ImageGallery onSelectImage={handleImageSelect} />
             </div>
           </div>
