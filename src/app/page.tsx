@@ -17,7 +17,7 @@ export default function Home() {
   const [shareDataUrl, setShareDataUrl] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(false);
   const [disclaimerLang, setDisclaimerLang] = useState<"uk" | "en">("uk");
-  const [disclaimerCollapsed, setDisclaimerCollapsed] = useState(false);
+  const [disclaimerCollapsed, setDisclaimerCollapsed] = useState(true);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
   const [buttonsHeight, setButtonsHeight] = useState(0);
@@ -33,12 +33,13 @@ export default function Home() {
       intro:
         "Марафон з вайбкодінгу: 10 проєктів, по одному на день, максимум 5 годин.\nЛегка навчальна штука, щоб перезавантажитися після великих задач.\nПроєкти сирі, невідшліфовані й можуть лагати (а що ви хотіли від проєкту, створеного за 3–4 години 🙂).",
       bullets: [
-        "Пофанити й покреативити, пробрейнстормити ідеї.",
-        "Відпрацювати вайбкодинг і швидкий перехід від ідеї до MVP.",
-        "Подивитися, як AI-підхід впливає на темп і якість.",
-        "Зрозуміти сильні/слабкі сторони підходу. Потенційні продуктові вигоди.",
+        "Повчитись вайбкодити за допомогою Cursor.",
+        "Дослідити, як AI-підхід впливає на темп і якість.",
+        "Зрозуміти сильні/слабкі сторони підходу, потенційні продуктові вигоди.",
         "Напрацьовувати нове мислення в реалізації проектів.",
-        "Вчасно відриватися від коду й приборкувати перфекціонізм — робити швидко й без залипань.",
+        "Створити проєкти, які хотілося реалізувати, але не було часу й можливостей.",
+        "Попрацювати в творчому, спонтанному, необтяжливому ключі.",
+        "Накидати проєкти в портфоліо.",
       ],
     },
     en: {
@@ -46,12 +47,13 @@ export default function Home() {
       intro:
         "Vibe-coding marathon: 10 projects, one per day, max 5 hours.\nA light learning build to reset after bigger work.\nProjects are raw, unpolished, and may lag (what else to expect from a 3–4 hour build 🙂).",
       bullets: [
-        "Have fun, get creative, brainstorm ideas.",
-        "Practice vibe-coding and jumping from idea to live MVP fast.",
-        "See how the AI-assisted approach affects speed and quality.",
-        "Understand approach strengths/weak spots. Potential product wins.",
+        "Learn vibe-coding with Cursor.",
+        "Explore how the AI-assisted approach affects speed and quality.",
+        "Understand the approach’s strengths/weaknesses and product upsides.",
         "Build a new mindset for shipping projects.",
-        "Step away on time and tame perfectionism — ship fast, skip endless polish.",
+        "Ship projects you wanted to build but lacked time or access to.",
+        "Work in a creative, spontaneous, low-pressure flow.",
+        "Add quick projects to the portfolio.",
       ],
     },
   };
